@@ -8,7 +8,6 @@ import importlib.util
 import settings
 import syslog
 import sys
-
 """
 Error codes:
 22 - Misconfigured. Invalid arguments and stuff.
@@ -77,7 +76,9 @@ def main():
             while True:
                 """
                 Notation: <PIN/ALIAS> <STATE>
-                Pin can be described in any of desired GPIO_MODES? if it was previous;y set in settings. 
+                Pin can be described in any of desired GPIO_MODES? if it was previously set in settings.
+                PIN/ALIAS is case sensitive!
+                 
                 State: up/true/on or down/false/off
                 
                 """
@@ -85,14 +86,41 @@ def main():
                 data = data.split(" ")
                 data = filter(None, data)  # fastest
 
-                if data[0] in settings.PINS:
-                    pass
-                elif data in settings.PINS.values():
+                thing_to_control = data[0]
+                command = data[1].lower()
+
+                if thing_to_control in settings.PINS:
+
+                    if command in positive_state:
+                        GPIO.output(thing_to_control, True)
+
+                    if command in negative_state:
+                        GPIO.output(thing_to_control, False)
+
+
+                elif thing_to_control in settings.ALIASES.values():
+
+                    verified_pin = None
+                    for pin, alias in settings.ALIASES.iteritems():
+                        if thing_to_control == alias:
+                            verified_pin = pin
+
+                    if verified_pin == None:
+                        syslog.syslog(syslog.LOG_ERR, 'Unknown alias/pin name')
+                        connection.sendall("\nUnrecognized command\nUnknown alias/pin name\n")
+                        break
+
+
+                    if command in positive_state:
+                        GPIO.output(verified_pin, True)
+
+                    if command in negative_state:
+                        GPIO.output(verified_pin, False)
 
 
                 else:
-                    print('no data from', client_address)
-                    connection.sendall("Unrecognized command")
+                    syslog.syslog(syslog.LOG_ERR, 'no data from', client_address)
+                    connection.sendall("\nUnrecognized command\n")
                     break
 
         finally:
@@ -101,6 +129,7 @@ def main():
 
 
 def cleanup():
+    #todo: Clean up procedures
     return
 
 

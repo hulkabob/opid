@@ -10,7 +10,7 @@ ALIASES = {
     "PA13" : "Lamp",
     "PA14" : "Fan",
     "PD14" : "Relay",
-    "PC7" : "Magnet Lock",
+    "PC7" : "Magnet_Lock",
 }
 
 

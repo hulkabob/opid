@@ -17,6 +17,8 @@ If you ant to add something to it - feel free!
 
 License: MIT. 
 
+Version: 0.2 
+
 Configs: 
 TBD
 
