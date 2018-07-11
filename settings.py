@@ -20,7 +20,10 @@ GROUP = "opid"
 UMASK = 0o002
 
 GPIO_MODE = "SUNXI"
-RUN_FILES = "/run/opid/"
-PID_FILE = "/run/opid/opid.pid"
-SOCKET = "/run/opid/pile.sock"
+#RUN_FILES = "/run/opid/"
+RUN_FILES = "./opid_run/"
+#PID_FILE = "/run/opid/opid.pid"
+PID_FILE = "./opid_run/opid.pid"
+#SOCKET = "/run/opid/pile.sock"
+SOCKET = "./opid_run/opid.sock"
 
