@@ -13,3 +13,8 @@ GPIO.output("PD14", True)
 GPIO.output("PD14", False) 
 GPIO.output("PC4", True) 
 GPIO.output("PC4", False) 
+
+
+GPIO.output("PA14", False)
+GPIO.output("PD14", False)
+GPIO.output("PC4", False)
