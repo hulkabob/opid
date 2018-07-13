@@ -9,16 +9,36 @@ transistor or doing other type of "intellectual" stuff?
 Well, you might be looking on the tool of choice. 
 
 All communication is done via UNIX socket. The idea is to send commands
-in some language. (Currently I'm looking towards JSON's and YAML's 
-as command containers.) It also can be a specialized protocol, 
-with fields and stuff, but not for now. 
+in some language. (Currently I'm looking also towards JSON's and YAML's 
+as command containers.) Currently it's implemented via 
+semantic language. Like "item - state". 
+What's fancy about this, is flexible "semantics" maps. As we 
+have boolean states of a GPIO pin, there are two groups of states. 
+Suddenly, positive and negative. 
 
-If you ant to add something to it - feel free! 
+
+
+If you want to add something to it - feel free! 
 
 License: MIT. 
 
 Version: 0.8
 
+### Todo: 
+ * Todo todo
+ * Todo 
+ * Todo todo
+ * todo tododododooooo dododododo
+ 
+ ![Pink Panther ](./pink-panther.png)
+
+ **Now seriously**: 
+ * Support for json / yaml bulk commands. 
+ * Setup script. 
+ * Init / Unit file. 
+ * Daemon interacting tool. (How to call it? opip? opii? opido?)
+ * Comments on unobvious stuff and help messages. 
+ 
 ## Usage: 
 
 You have several options: 
@@ -92,7 +112,7 @@ ALIASES = {
     "PA13" : "Lamp",
     "PA14" : "Fan",
     "PD14" : "Relay",
-    "PC7" : "Magnet_Lock",
+    "PC7" : "Magic_lamp",
 }
 ```
 Some simple things like user, group, umask. (Doesn't change anything, 
