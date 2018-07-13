@@ -18,21 +18,24 @@ If you ant to add something to it - feel free!
 License: MIT. 
 
 Version: 0.8
-##Usage: 
+
+## Usage: 
 
 You have several options: 
 * interfacing it via socket
 * using opip tool. (TBD)
 
-###Socket: 
+### Socket: 
+
 `socat - /run/opid/opid.pid`
 
-####opip tool
+#### opip tool
+
 ```
 TBD
 ```
 
-###Commands:
+### Commands:
 
 
 Notation: `<PIN/ALIAS>` `<STATE>`
@@ -54,7 +57,7 @@ Drawbridge Up
 ```
 If Alias or pin is misspelled or unknown, deamon will respond with `Unkown command`
 and close the socket connection. 
-##Configs: 
+## Configs: 
 By default, should be stored in /etc/opid/settings.py
 But you're not limited to change location of the config file 
 in opid.py:
