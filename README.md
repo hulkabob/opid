@@ -17,11 +17,96 @@ If you ant to add something to it - feel free!
 
 License: MIT. 
 
-Version: 0.2 
+Version: 0.8
+##Usage: 
 
-Configs: 
+You have several options: 
+* interfacing it via socket
+* using opip tool. (TBD)
+
+###Socket: 
+`socat - /run/opid/opid.pid`
+
+####opip tool
+```
 TBD
+```
 
+###Commands:
+
+
+Notation: `<PIN/ALIAS>` `<STATE>`
+
+Pin can be described in any of desired GPIO_MODES, 
+if it was previously set in settings.
+PIN/ALIAS is case sensitive!
+
+State: `up/true/on` or `down/false/off`
+
+```
+PA14 On
+
+PA13 down
+
+Magic_Lamp off
+
+Drawbridge Up
+```
+If Alias or pin is misspelled or unknown, deamon will respond with `Unkown command`
+and close the socket connection. 
+##Configs: 
+By default, should be stored in /etc/opid/settings.py
+But you're not limited to change location of the config file 
+in opid.py:
+
+`settings_location = "./settings.py"`
+
+So you've got a number of things to configure. 
+Firstly - how you will name your pins. 
+In which mode you want it to operate? 
+
+```GPIO_MODE = "SUNXI"```
+
+Available GPIO modes are: `SUNXI`, `BCM`, `BOARD`.
+For example, here is my own definition of used pins:
  
+```
+PINS = [
+    "PA13", # Transistor got fried beause this dude works as TTL Tx on startup.
+    "PA14", #
+    "PD14", #
+    "PC4",  #
+]
+```
 
+Now the sweet part: you feel like screwed up remembering 
+which pin is doin' what? We have aliases! A map between a pin and a 
+some sort of definition of a device. For an example:   
 
+```
+# This is sort of alias tool. When you associate a pin with a device it's controlling. For logs exclusively.
+ALIASES = {
+    "PA13" : "Lamp",
+    "PA14" : "Fan",
+    "PD14" : "Relay",
+    "PC7" : "Magnet_Lock",
+}
+```
+Some simple things like user, group, umask. (Doesn't change anything, 
+as I didn;t implement this yet.)
+```
+#USER = "opid"
+GROUP = "opid"
+UMASK = 0o002
+
+```
+
+And run files location. 
+```
+#RUN_FILES = "/run/opid/"
+RUN_FILES = "./opid_run/"
+#PID_FILE = "/run/opid/opid.pid"
+PID_FILE = "opid.pid"
+#SOCKET = "/run/opid/pile.sock"
+SOCKET = "./opid.sock"
+```

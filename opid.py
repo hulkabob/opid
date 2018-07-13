@@ -16,7 +16,7 @@ Error codes:
 22 - Misconfigured. Invalid arguments and stuff.
 
 """
-
+settings_location = "./settings.py"
 #"""
 ### This is a debugging stub for developing on a desktop
 class gpio():
@@ -41,7 +41,7 @@ positive_state = ["on", "true", "up"]
 negative_state = ["off", "false", "down"]
 ######## Importing settings ###################
 
-spec = importlib.util.spec_from_file_location("settings", "./settings.py")
+spec = importlib.util.spec_from_file_location("settings", settings_location)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 sys.modules["settings"] = module
@@ -63,7 +63,7 @@ def main(logf):
     fh.setFormatter(formatter)
 
     logger.addHandler(fh)
-    time.sleep(5)
+    #time.sleep(5)
 
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     if os.path.isdir(settings.RUN_FILES):
@@ -82,7 +82,7 @@ def main(logf):
         GPIO.setmode(GPIO.BOARD)
 
     else:
-        syslog(LOG_CRIT, "Unknown GPIO_MODE specified!")
+        logger.error("Unknown GPIO_MODE specified!")
         print("Unknown GPIO_MODE specified!", file=sys.stderr)
         exit(22)  # define EINVAL 22 /* Invalid argument */
 
@@ -101,7 +101,7 @@ def main(logf):
     while True:
         # Wait for a connection
 
-        syslog('Waiting for connection')
+        logger.info('Waiting for connection')
         connection, client_address = sock.accept()
         try:
             # Receive the data in chunks and parse it.
@@ -143,7 +143,7 @@ def main(logf):
                             verified_pin = pin
 
                     if verified_pin == None:
-                        syslog(LOG_ERR, 'Unknown alias/pin name')
+                        logger.error('Unknown alias/pin name')
                         connection.sendall(b"\nUnrecognized command\nUnknown alias/pin name\n")
                         break
 
@@ -158,14 +158,14 @@ def main(logf):
 
 
                 else:
-                    syslog(LOG_INFO, 'no data from socket')
+                    logger.info(LOG_INFO, 'no data from socket')
                     print(thing_to_control)
                     connection.sendall(b"\nUnrecognized command\n")
                     break
 
         finally:
             # Clean up the connection
-            print("Closing conn")
+            logger.info("Closing conn")
             connection.close()
 
 
@@ -201,7 +201,7 @@ def start_daemon():
     }
 
     with daemon_context:
-        main("./main.log")
+        main(settings.LOG_FILE)
 
 def stop_daemon():
     try:

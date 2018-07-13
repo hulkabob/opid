@@ -26,4 +26,5 @@ RUN_FILES = "./opid_run/"
 PID_FILE = "opid.pid"
 #SOCKET = "/run/opid/pile.sock"
 SOCKET = "./opid.sock"
+LOG_FILE = "./opid.log"
 
