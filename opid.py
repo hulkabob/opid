@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os
-#import OPi.GPIO as GPIO
+import OPi.GPIO as GPIO
 import socket
 import signal
 from daemon import DaemonContext, pidfile
@@ -8,7 +8,6 @@ import logging
 import argparse
 import importlib.util
 #import settings
-from syslog import syslog, LOG_CRIT, LOG_ERR, LOG_INFO
 import sys
 import time
 """
@@ -17,7 +16,7 @@ Error codes:
 
 """
 settings_location = "./settings.py"
-#"""
+"""
 ### This is a debugging stub for developing on a desktop
 class gpio():
     def setmode(self, mode):
@@ -36,7 +35,7 @@ class gpio():
 
 
 GPIO = gpio()
-#"""
+"""
 positive_state = ["on", "true", "up"]
 negative_state = ["off", "false", "down"]
 ######## Importing settings ###################
@@ -158,7 +157,7 @@ def main(logf):
 
 
                 else:
-                    logger.info(LOG_INFO, 'no data from socket')
+                    logger.info('no data from socket')
                     print(thing_to_control)
                     connection.sendall(b"\nUnrecognized command\n")
                     break
