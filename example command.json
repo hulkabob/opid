@@ -1,0 +1,16 @@
+{
+  "devices": [
+    {
+      "pin": "PA14",
+      "state": "False"
+    },
+    {
+      "pin": "Magic_Lamp",
+      "state": "On"
+    },
+    {
+      "pin": "Magnet_Lock",
+      "state": "On"
+    }
+  ]
+}

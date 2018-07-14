@@ -25,6 +25,7 @@ while True:
     # Wait for a connection
     print('waiting for a connection')
     connection, client_address = sock.accept()
+    all_data = b""
     try:
         print('connection from', client_address)
 
@@ -34,13 +35,15 @@ while True:
             print('received {!r}'.format(data))
             if data:
                 print('sending data back to the client')
-                connection.sendall(data)
+                all_data+=data
+                #connection.sendall(data)
             else:
                 print('no data from', client_address)
                 break
 
     finally:
         # Clean up the connection
+        print(all_data)
         connection.close()
 
 

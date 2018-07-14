@@ -22,7 +22,7 @@ If you want to add something to it - feel free!
 
 License: MIT. 
 
-Version: 0.8
+Version: 0.88
 
 ### Todo: 
  * Todo todo
@@ -33,7 +33,7 @@ Version: 0.8
  ![Pink Panther ](./pink-panther.png)
 
  **Now seriously**: 
- * Support for json / yaml bulk commands. 
+ * ~~Support for json / yaml bulk commands.~~
  * Setup script. 
  * Init / Unit file. 
  * Daemon interacting tool. (How to call it? opip? opii? opido?)

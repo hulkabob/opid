@@ -15,9 +15,15 @@ ALIASES = {
 
 
 #USER = "opid"
-GROUP = "opid"
+#GROUP = "opid"
+GROUP = "masterbob"
 
-UMASK = 0o002
+UMASK = 0o017 # Security!
+
+COMMAND_FORMAT = "JSON"
+"""
+Allowd are "SEMANTIC", "JSON" and "YAML"
+"""
 
 GPIO_MODE = "SUNXI"
 #RUN_FILES = "/run/opid/"
