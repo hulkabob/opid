@@ -33,11 +33,12 @@ Version: 0.88
  ![Pink Panther ](./pink-panther.png)
 
  **Now seriously**: 
- * ~~Support for json / yaml bulk commands.~~
+ * [DONE] ~~Support for json / yaml bulk commands.~~
+ * [DONE] ~~Logging to separate file.~~ 
  * Setup script. 
  * Init / Unit file. 
- * Daemon interacting tool. (How to call it? opip? opii? opido?)
- * Comments on unobvious stuff and help messages. 
+ * [IN PROGRESS] Daemon interacting tool. (How to call it? ~~opip? opii? opido?~~ pinner!)
+ * [??] Comments on unobvious stuff and help messages. 
  
 ## Usage: 
 

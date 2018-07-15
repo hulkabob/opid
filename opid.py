@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import os
-import OPi.GPIO as GPIO
+#import OPi.GPIO as GPIO
 import socket
 import signal
+import textwrap
 from daemon import DaemonContext, pidfile
 import logging
 import argparse
@@ -13,6 +14,8 @@ import json
 import yaml
 """
 Error codes:
+2  -  No such file or directory.
+3  - No such process.
 22 - Misconfigured. Invalid arguments and stuff.
 """
 
@@ -40,17 +43,20 @@ class gpio():
 
 
 GPIO = gpio()
-"""
+#"""
 positive_state = ["on", "true", "up"]
 negative_state = ["off", "false", "down"]
 ######## Importing settings ###################
-#TODO: Fail properly when no settings found (With PEP8)
 spec = importlib.util.spec_from_file_location("settings", settings_location)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 sys.modules["settings"] = module
+try:
+    import settings
+except ImportError:
+    print("[!] No settings in {location}".format(location=settings_location))
+    exit(2)
 
-import settings
 
 
 def control(connection, thing_to_control, command):
@@ -102,6 +108,11 @@ def control(connection, thing_to_control, command):
 
 
 def main(logf):
+    """
+
+    :param logf:
+    :return:
+    """
 
     logger = logging.getLogger('opid')
     logger.setLevel(logging.INFO)
@@ -236,12 +247,6 @@ def main(logf):
                 """
                 raw_orders = yaml.load(data)
                 raw_orders = raw_orders
-                print(type(raw_orders))
-                print(raw_orders)
-                if raw_orders is None:
-                    print("How the FUCK?!")
-                    print(raw_orders)
-                    exit(1)
                 for order in raw_orders['devices']:
                     orders.append({
                         'thing_to_control': order['pin'],
@@ -332,10 +337,26 @@ def stop_daemon():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="OPID Daemon")
+    parser = argparse.ArgumentParser(prog = 'opid',formatter_class = argparse.RawDescriptionHelpFormatter,
+                                     description = textwrap.dedent('''
+    =======================================
+                                                        
+      ,ad8888ba,    88888888ba   88  88888888ba,    
+     d8"'    `"8b   88      "8b  88  88      `"8b   
+    d8'        `8b  88      ,8P  88  88        `8b  
+    88          88  88aaaaaa8P'  88  88         88  
+    88          88  88""""""'    88  88         88  
+    Y8,        ,8P  88           88  88         8P  
+     Y8a.    .a8P   88           88  88      .a8P   
+      `"Y8888Y"'    88           88  88888888Y"'    
+                                                        
+    =======================================
+    For Orange Pi gpio Daemon
+    '''))
     parser.add_argument('-p', '--stop', action='store_const', const=True)
     parser.add_argument('-s', '--start', action='store_const', const=True)
     parser.add_argument('-r', '--reload', action='store_const', const=True)
+    parser.add_argument('-f', '--foreground', action='store_const', const=True)
     args = parser.parse_args()
     main(settings.LOG_FILE)
     if args.stop and args.start:
@@ -352,3 +373,6 @@ if __name__ == "__main__":
     elif args.reload:
         stop_daemon()
         start_daemon()
+
+    elif args.foreground:
+        main(settings.LOG_FILE)
