@@ -55,7 +55,13 @@ if __name__ == "__main__":
      ?8P                                              
 
         For Pinning tools.
-        '''))
+        '''),
+    epilog ="""
+    Examples: 
+        pinner -m semantic -p PA14 -s False
+        pinner -m semantic -p Magic_Lamp -s On
+    
+    """)
     parser.add_argument('-m', '--mode', help="Command mode. semantic, yaml and json are supported.")
     parser.add_argument('-f', '--file', help="When yaml or json are seletcted, point to the json or yaml file. "
                                              "If not specified, stdin will serve as file source.")
