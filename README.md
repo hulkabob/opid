@@ -22,7 +22,7 @@ If you want to add something to it - feel free!
 
 License: MIT. 
 
-Version: 0.88
+Version: 0.92
 
 ### Todo: 
  * Todo todo
@@ -33,11 +33,11 @@ Version: 0.88
  ![Pink Panther ](./pink-panther.png)
 
  **Now seriously**: 
- * [DONE] ~~Support for json / yaml bulk commands.~~
- * [DONE] ~~Logging to separate file.~~ 
+ * [X] ~~Support for json / yaml bulk commands.~~
+ * [X] ~~Logging to separate file.~~ 
  * Setup script. 
  * Init / Unit file. 
- * [IN PROGRESS] Daemon interacting tool. (How to call it? ~~opip? opii? opido?~~ pinner!)
+ * [X] ~~Daemon interacting tool. (How to call it? opip? opii? opido? pinner!)~~
  * [??] Comments on unobvious stuff and help messages. 
  
 ## Usage: 
@@ -62,12 +62,12 @@ But you can load files as well.
 ./pinner.py -m yaml -f ./example\ command.yaml
 ```
 Or like this
-```
+```bash
 ./pinner.py -m json -f ./example\ command.json
 ```
 
 And the best thing about it, you don't need to care about which 
-command set is configured in settings! If they differ, pinner 
+command set is configured in settings! If they differ, `pinner`
 will ~~change~~ translate then into needed one. Even into `semantic` one!
 With a few clutches though, but still. 
 
