@@ -35,10 +35,10 @@ Version: 0.92
  **Now seriously**: 
  * [X] ~~Support for json / yaml bulk commands.~~
  * [X] ~~Logging to separate file.~~ 
- * Setup script. 
- * Init / Unit file. 
+ * [ ] Setup script. 
+ * [ ] Init / Unit file. 
  * [X] ~~Daemon interacting tool. (How to call it? opip? opii? opido? pinner!)~~
- * [??] Comments on unobvious stuff and help messages. 
+ * [ ] Comments on unobvious stuff and help messages. 
  
 ## Usage: 
 
