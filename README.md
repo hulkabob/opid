@@ -50,11 +50,26 @@ You have several options:
 
 `socat - /run/opid/opid.pid`
 
-#### opip tool
+#### pinner tool
 
+Designed to be used like this: 
+```bash
+./pinner.py -m semantic -p Magic_Lamp -s On
+./pinner.py -m semantic -p PA14 -s False
 ```
-TBD
+But you can load files as well. 
+```bash
+./pinner.py -m yaml -f ./example\ command.yaml
 ```
+Or like this
+```
+./pinner.py -m json -f ./example\ command.json
+```
+
+And the best thing about it, you don't need to care about which 
+command set is configured in settings! If they differ, pinner 
+will ~~change~~ translate then into needed one. Even into `semantic` one!
+With a few clutches though, but still. 
 
 ### Commands:
 

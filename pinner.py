@@ -45,7 +45,7 @@ def send_to_socet(conn_socket, command_package):
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     # now connect to the web server on port 80 - the normal http port
     sock.connect(conn_socket)
-    sock.sendall(command_package)
+    sock.sendall(bytes(command_package,encoding="utf-8"))
 
 
 def read_file(file):
@@ -141,19 +141,20 @@ if __name__ == "__main__":
     parser.add_argument('-s', '--state', help="And give the desired pin state. On/Off, Up/Down, True/False are "
                                               "appropriate by default.")
     args = parser.parse_args()
-
+    unix_socket = os.path.join(settings.RUN_FILES, settings.SOCKET)
     if args.mode == "json" or args.mode == "yaml":
         command_package = read_file(args.file)
         file_type = check_type(command_package)
         commands = translate_commands(command_package, file_type)
         if type(commands) is list:
             for item in commands:
-                send_to_socet(settings.SOCKET, item)
+
+                send_to_socet(unix_socket, item)
         else:
-            send_to_socet(settings.SOCKET, commands)
+            send_to_socet(unix_socket, commands)
 
     elif args.mode == "semantic":
         semantic_format = "{pin} {state}"
         command_package = semantic_format.format(pin=args.pin, state=args.state)
         commands = translate_commands(command_package, "SEMANTIC")
-        send_to_socet(settings.SOCKET, commands)
+        send_to_socet(unix_socket, commands)

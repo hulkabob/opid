@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os
-#import OPi.GPIO as GPIO
+import OPi.GPIO as GPIO
 import socket
 import signal
 import textwrap
@@ -217,7 +217,7 @@ def main(logf):
             if stored_data:
                 data = stored_data.decode("utf-8")
             else:
-                break
+                continue
             # Default command notation
             if settings.COMMAND_FORMAT == "SEMANTIC":
                 data = data.rstrip()
@@ -225,7 +225,7 @@ def main(logf):
 
                 if len(rez) == 1:
                     # If we have only "\n"
-                    break
+                    continue
 
                 data = list(filter(None, rez))
                 thing_to_control = data[0]
@@ -269,12 +269,16 @@ def main(logf):
                  ] 
                 }
                 """
-                raw_orders = json.loads(data)
-                for order in raw_orders['devices']:
-                    orders.append({
-                        'thing_to_control': order['pin'],
-                        'command': order['state']
-                    })
+                try:
+                    raw_orders = json.loads(data)
+                    for order in raw_orders['devices']:
+                        orders.append({
+                            'thing_to_control': order['pin'],
+                            'command': order['state']
+                        })
+                except ValueError as e:
+                    orders = []
+
 
             for order in orders:
 
@@ -310,8 +314,6 @@ def cleanup():
 
 
 def start_daemon():
-    if not os.path.isdir(settings.RUN_FILES):
-        os.makedirs(settings.RUN_FILES, exist_ok=True)
     daemon_context = DaemonContext(
             working_directory=settings.RUN_FILES,
             umask=settings.UMASK,
@@ -358,7 +360,12 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--reload', action='store_const', const=True)
     parser.add_argument('-f', '--foreground', action='store_const', const=True)
     args = parser.parse_args()
-    main(settings.LOG_FILE)
+    try:
+        os.makedirs(settings.RUN_FILES, mode=0o755, exist_ok=True)
+    except OSError as err:
+        print(err)
+        exit(err.errno)
+
     if args.stop and args.start:
         print("Uhh. Something one maybe?")
         # Wrong arg
@@ -375,4 +382,5 @@ if __name__ == "__main__":
         start_daemon()
 
     elif args.foreground:
+        os.chdir(settings.RUN_FILES)
         main(settings.LOG_FILE)
