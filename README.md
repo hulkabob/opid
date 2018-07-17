@@ -44,7 +44,7 @@ Version: 0.92
 
 You have several options: 
 * interfacing it via socket
-* using opip tool. (TBD)
+* using pinner tool
 
 ### Socket: 
 
