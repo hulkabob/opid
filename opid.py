@@ -19,7 +19,7 @@ Error codes:
 22 - Misconfigured. Invalid arguments and stuff.
 """
 
-settings_location = "./settings.py"
+settings_location = "/etc/opid/settings.py"
 """
 ### This is a debugging stub for developing on a desktop
 

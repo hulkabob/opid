@@ -1,0 +1,14 @@
+[Unit]
+Description=The GPIO daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/opid --start
+ExecRestart=/usr/local/bin/opid --restart
+ExecStop=/usr/local/bin/opid --stop
+Type=forking
+PIDFile=/run/opid_run/opid.pid
+User=root
+
+[Install]
+WantedBy=default.target
