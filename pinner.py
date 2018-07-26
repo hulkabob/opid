@@ -28,7 +28,7 @@ Planned features:
     - Loading YAMLs. 
 """
 ########################## Loading settings #################################
-settings_location = "./settings.py"
+settings_location = "/etc/opid/settings.py"
 spec = importlib.util.spec_from_file_location("settings", settings_location)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
@@ -94,7 +94,7 @@ def translate_commands(command_package, type):
             commands = {
                 'devices':[
                     {'pin':pin,
-                     'state': state}
+                     'state': state.lower()}
                 ]
             }
     if output_type == "YAML":
