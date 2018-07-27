@@ -71,10 +71,10 @@ def control(connection, thing_to_control, command):
     if thing_to_control in settings.PINS:
         # So, we have a pin
 
-        if command in positive_state:
+        if command.lower() in positive_state:
             GPIO.output(thing_to_control, True)
 
-        if command in negative_state:
+        if command.lower() in negative_state:
             GPIO.output(thing_to_control, False)
         # try:
         #     connection.sendall(b"Success\n")
